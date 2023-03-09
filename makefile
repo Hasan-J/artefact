@@ -6,7 +6,7 @@ DUMMY_FILE=.dummy
 
 tests: $(DUMMY_FILE)
 	@rm -f $(DUMMY_FILE)
-	@make up run down
+	@make up run down clean
 
 $(DUMMY_FILE):
 	@touch $(DUMMY_FILE)
