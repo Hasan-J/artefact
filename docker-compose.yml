@@ -3,24 +3,10 @@ version: "3.9"
 services:
   mongo:
     image: mongo:6.0.4
-    restart: always
     environment:
       MONGO_INITDB_ROOT_USERNAME: dev
       MONGO_INITDB_ROOT_PASSWORD: password
-
-  crawlers:
-    build: ./crawlers
-    working_dir: /code/news_websites
-    command: scrapy crawl bbc
-    volumes:
-      - ./crawlers/news_websites:/code/news_websites
-      - ./crawlers/scrapy.cfg:/code/scrapy.cfg
-    environment:
-      - MONGODB_CONN=mongodb://dev:password@mongo:27017/
-      - MONGODB_DATABASE_NAME=artefact
-      - MONGODB_COLLECTION=news_articles
-    depends_on:
-      - mongo
+    restart: on-failure
 
   backend:
     build: ./backend
@@ -28,13 +14,13 @@ services:
     volumes:
       - ./backend/artefact:/code/artefact
       - ./backend/config:/code/config
+      - ./backend/tests:/code/tests
       - ./backend/manage.py:/code/manage.py
-    ports:
-      - 8000:8000
+      - ./backend/pytest.ini:/code/pytest.ini
     environment:
       - MONGODB_CONN=mongodb://dev:password@mongo:27017/
       - MONGODB_DATABASE_NAME=artefact
       - MONGODB_COLLECTION=news_articles
     depends_on:
       - mongo
-      - crawlers
+    restart: on-failure

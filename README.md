@@ -94,7 +94,7 @@ The main compose file in the repo contains 3 services:
 
 In the root of repo:
 ```bash
-docker compose up
+docker compose -f docker-compose.yml -f docker-compose.local.yml up
 ```
 
 You will see some logs related to crawling, then crawlers container will stop. After that you can start requesting articles using the backend at http://localhost:8000/articles
@@ -102,6 +102,8 @@ You will see some logs related to crawling, then crawlers container will stop. A
 ## Testing
 
 ### crawlers
+
+*(ps: you still need an internet connection)*
 
 In order to avoid test cases becoming unwieldy in the future, I opted to stick to the integrated method that scrapy provides, using [scrapy contracts](https://docs.scrapy.org/en/latest/topics/contracts.html).
 
@@ -112,6 +114,19 @@ We can then check our expectations for them using:
 ```bash
 scrapy check
 ```
+
+### backend
+
+Currently includes only integration tests that can be executed inside a docker environment.
+
+To run the integration tests, do:
+
+```bash
+make tests
+```
+
+This will spin up the necessary containers in a separate docker compose project, run the tests and then strip down everything
+leaving you with a clean environment.
 
 ## Contributing
 
