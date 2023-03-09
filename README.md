@@ -24,6 +24,17 @@ The code is split into two parts:
     GET http://localhost:8000/articles?keyword=<VALUE>
     ```
 
+
+## Table Of Content
+
+- [Installation](#installation)
+- [Configuration](#configuration)
+- [Usage - Local](#usage---local)
+- [Usage - Docker](#usage---docker)
+- [Testing](#testing)
+- [Contributing](#contributing)
+- [License](#license)
+
 ## Installation
 
 Change dir to one of the directories `crawlers` or `backend`, then:
@@ -31,7 +42,7 @@ Change dir to one of the directories `crawlers` or `backend`, then:
 ```bash
 python3.10 -m venv .venv
 source .venv/bin/activate
-pip install -r requirements.txt
+pip install -r requirements/{[base|local]}.txt
 ```
 
 ## Configuration
