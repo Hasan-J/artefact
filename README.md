@@ -50,7 +50,7 @@ Have the env vars exported in the current working shell (on linux use `export` o
 
 Copy the `backend/.env.example` file into `backend/.env` and put your custom values in it.
 
-## Usage
+## Usage - Local
 
 ### crawlers
 
@@ -81,6 +81,23 @@ curl http://localhost:8000/api/articles
 # Get articles by keyword (matches are done on the article title and full text)
 curl http://localhost:8000/api/articles?keyword=<VALUE>
 ```
+
+## Usage - Docker
+
+In case you don't want to install enything on your local host, you can run everything in docker.
+
+The main compose file in the repo contains 3 services:
+
+- mongo: MongoDB database.
+- crawlers: Runs the container for bbc spider and crawls the news website, it's a one-off command, it will run and exit with code zero when finished.
+- backend: will run the django local server.
+
+In the root of repo:
+```bash
+docker compose up
+```
+
+You will see some logs related to crawling, then crawlers container will stop. After that you can start requesting articles using the backend at http://localhost:8000/articles
 
 ## Testing
 
